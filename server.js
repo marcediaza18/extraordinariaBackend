@@ -10,6 +10,10 @@ app.use(express.json());
 const acusticaRoutes = require('./routes/acustica');
 app.use('/api/acustica', acusticaRoutes);
 
+const bicicletaRoutes = require('./routes/bicicleta');
+app.use('/api/bicicletas', bicicletaRoutes);
+
+
 
 app.get('/', (req, res) => {
   res.send('API Smart City funcionando');
