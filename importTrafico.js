@@ -46,6 +46,7 @@ function importarCSV() {
         id: row.id,
         nombre: row.nombre,
         tipo: row.tipo_elem,
+        distrito: row.distrito,
         latitud: parsearFloat(row.latitud),
         longitud: parsearFloat(row.longitud),
         intensidadMediaDiaria: null, // no disponible en este CSV
