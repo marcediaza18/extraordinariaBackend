@@ -16,6 +16,9 @@ app.use('/api/bicicletas', bicicletaRoutes);
 const accidentesRoutes = require('./routes/accidentes');
 app.use('/api/accidentes', accidentesRoutes);
 
+const traficoRoutes = require('./routes/trafico');
+app.use('/api/trafico', traficoRoutes);
+
 
 
 app.get('/', (req, res) => {
