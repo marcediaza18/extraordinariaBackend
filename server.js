@@ -19,8 +19,6 @@ app.use('/api/accidentes', accidentesRoutes);
 const traficoRoutes = require('./routes/trafico');
 app.use('/api/trafico', traficoRoutes);
 
-
-
 app.get('/', (req, res) => {
   res.send('API Smart City funcionando');
 });

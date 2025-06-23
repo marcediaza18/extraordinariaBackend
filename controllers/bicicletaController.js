@@ -10,6 +10,18 @@ const getAll = async (req, res) => {
   }
 };
 
+// Crear una bicicleta nueva
+const createBicicleta = async (req, res) => {
+  try {
+    const nuevaBicicleta = new Bicicleta(req.body);
+    await nuevaBicicleta.save();
+    res.status(201).json(nuevaBicicleta);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al crear la bicicleta' });
+  }
+};
+
 module.exports = {
-  getAll
+  getAll,
+  createBicicleta
 };
