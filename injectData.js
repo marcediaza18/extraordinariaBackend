@@ -10,6 +10,11 @@ const distritos = [
   'Moratalaz', 'San Blas-Canillejas', 'Hortaleza', 'Ciudad Lineal', 'Barajas', 'Vicálvaro'
 ];
 
+// Lista de tipos de accidentes (tomado del CSV)
+const tiposAccidente = [
+  'Colisión fronto-lateral', 'Choque contra obstáculo fijo', 'Alcance', 'Colisión lateral', 'Solo salida de la vía', 'Colisión frontal', 'Caída', 'Vuelco', 'Atropello a persona', 'Colisión múltiple', 'Otro', 'Despeñamiento', 'Atropello a animal'
+];
+
 // Configuración de parámetros desde la consola
 const argv = yargs
   .option('type', {
@@ -43,6 +48,41 @@ function generarFechaAleatoria2052() {
   return `${dia}/0${mes}/2052`; // Formato DD/MM/2052
 }
 
+// Generar una fecha aleatoria en el año 2052 (mes-año)
+function generarFechaAleatoriames2052() {
+  const año = 2052;
+  const mes = faker.number.int({ min: 1, max: 12 });
+  return `${mes.toString().padStart(2, '0')}-${año}`;
+}
+
+// Generar datos aleatorios para acústica
+function generarDatosAcustica() {
+  const ld = faker.number.int({ min: 40, max: 80 });
+  const le = faker.number.int({ min: 40, max: 80 });
+  const ln = faker.number.int({ min: 40, max: 80 });
+  const laeq24 = (ld + le + ln) / 3; // Media de ld, le y ln
+
+  // Generar la estación con el formato NMT-xx
+  const estacion = `NMT-${faker.number.int({ min: 1, max: 86 }).toString().padStart(2, '0')}`;
+
+  return {
+    ld,
+    le,
+    ln,
+    laeq24,
+    estacion,
+    fecha: generarFechaAleatoriames2052()
+  };
+}
+
+// Generar hora aleatoria en formato HH:mm:ss
+function generarHoraAleatoria() {
+  const hora = faker.number.int({ min: 0, max: 23 });
+  const minuto = faker.number.int({ min: 0, max: 59 });
+  const segundo = faker.number.int({ min: 0, max: 59 });
+  return `${hora.toString().padStart(2, '0')}:${minuto.toString().padStart(2, '0')}:${segundo.toString().padStart(2, '0')}`;
+}
+
 // Generar coordenadas dentro de Madrid
 function generarCoordenadasMadrid() {
   const latitud = faker.number.float({ min: 40.3, max: 40.6 });  // Latitud dentro de Madrid
@@ -74,11 +114,13 @@ function generarDatos(tipo) {
 
   const data = {
     accidentes: {
-      id: faker.string.uuid(),
-      tipo_accidente: faker.word.noun(),
-      localizacion: faker.location.city(),
-      fecha: generarFechaAleatoria2052(),
-      gravedad: faker.helpers.arrayElement(['Leve', 'Grave', 'Muy grave'])
+      id: faker.string.uuid(), // ID aleatorio
+      expediente: faker.string.uuid(), // Expediente aleatorio
+      tipoAccidente: faker.helpers.arrayElement(tiposAccidente), // Tipo de accidente aleatorio
+      distrito: faker.helpers.arrayElement(distritos), // Distrito aleatorio de Madrid
+      fecha: generarFechaAleatoria2052(), // Fecha aleatoria en 2052
+      hora: generarHoraAleatoria(), // Hora aleatoria
+      gravedad: faker.helpers.arrayElement(['Leve', 'Grave', 'Muy grave']) // Gravedad aleatoria
     },
     bicicletas: {
       dia: generarFechaAleatoria2052(),
@@ -87,10 +129,7 @@ function generarDatos(tipo) {
       usosAnual: usosAnual,
       usosOcasional: usosOcasional
     },
-    acustica: {
-      estacion: faker.word.noun(),
-      laeq24: faker.number.int({ min: 45, max: 90 })
-    },
+    acustica: generarDatosAcustica(), // Llamada a la función que genera los datos de acústica
     trafico: {
       id: faker.string.uuid(),
       nombre: distritoNombre, // Nombre del distrito
