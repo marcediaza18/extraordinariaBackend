@@ -20,13 +20,13 @@ Este es el backend para la plataforma de monitorización y análisis de datos ur
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/marcediaza18/extraordinariaBackend.git
+   git clone https://github.com/marcediaza18/smartcityBackend.git
    ```
 
 2. Navega a la carpeta del proyecto:
 
    ```bash
-   cd extraordinariaBackend
+   cd smartcityBackend
    ```
 
 3. Instala las dependencias:
